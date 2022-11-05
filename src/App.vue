@@ -1,6 +1,7 @@
 <template>
-  <h1 class="text-3xl font-bold underline text-[#fbcd52]">Hello world!</h1>
-  <p>Test</p>
+  <div class="container">
+    <router-view></router-view>
+  </div>
 </template>
 
 <script>
