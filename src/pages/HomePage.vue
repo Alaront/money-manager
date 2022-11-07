@@ -1,10 +1,19 @@
 <template>
-  <h1 class="text-3xl font-bold underline text-[#fbcd52]">Home</h1>
+  <header-title />
+  <home-content />
 </template>
 
 <script>
+import Title from "@/components/Home/TitleHome";
+import ContentHome from "@/components/Home/ContentHome";
+
 export default {
   name: "App",
+
+  components: {
+    "header-title": Title,
+    "home-content": ContentHome,
+  },
 };
 </script>
 
