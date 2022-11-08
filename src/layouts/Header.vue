@@ -15,6 +15,13 @@
             >Home</router-link
           >
         </li>
+        <li class="relative">
+          <router-link
+            class="block hover:bg-[#775da670] header-btn font-medium text-[16px] leading-[19px] py-[16px] pr-[12px] rounded-[12px] text-[#202020] pl-[48px] after:absolute after:bg-[url('../assets/header/category-icon.svg')] after:bg-cover after:w-[24px] after:h-[24px] after:top-[13px] after:left-[12px]"
+            to="/category"
+            >Сategory</router-link
+          >
+        </li>
       </ul>
     </nav>
   </header>
