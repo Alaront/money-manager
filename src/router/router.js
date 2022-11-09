@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomePage from "@/pages/HomePage";
-import NewCategoryPage from "@/pages/NewCategoryPage";
+import CategoryPage from "@/pages/CategoryPage";
 
 export default createRouter({
   history: createWebHistory(),
@@ -12,7 +12,7 @@ export default createRouter({
     },
     {
       path: "/category",
-      component: NewCategoryPage,
+      component: CategoryPage,
       alias: "/category",
     },
   ],
