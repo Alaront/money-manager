@@ -16,4 +16,6 @@ export default createRouter({
       alias: "/category",
     },
   ],
+  linkActiveClass: "active-link",
+  linkExactActiveClass: "active-link",
 });

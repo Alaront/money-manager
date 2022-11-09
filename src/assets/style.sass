@@ -8,6 +8,21 @@ body
 #app, .content
   min-height: 100vh
 
+.active-link
+  position: relative
+
+  &:before
+    content: ''
+    position: absolute
+    top: 21px
+    left: 5px
+    background: #775da6
+    width: 5px
+    height: 5px
+    border-radius: 2.5px
+
+
+
 h1, h2, h3, h4, h5, h6,
 a,
 p
