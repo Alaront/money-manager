@@ -3,7 +3,7 @@
     <h2 class="text-[23px] leading-[26px] font-medium text-[#202020] mb-[20px]">
       Ваш кошелёк в других валютных парах (ЦБ РФ)
     </h2>
-    <table>
+    <table class="table-info">
       <tr>
         <th>Валютная пара</th>
         <th>Ваши средства в ₽</th>
@@ -82,43 +82,4 @@ export default {
 };
 </script>
 
-<style scoped lang="sass">
-table
-  width: 100%
-  box-sizing: border-box
-
-th
-  padding: 5px 15px 15px 15px
-  box-sizing: border-box
-  text-align: left
-  font-size: 14px
-  line-height: 22px
-  color: #898989
-  font-weight: 300
-
-
-  &:first-child
-    padding-left: 0
-    max-width: 80px
-
-  &:last-child
-    border-right: none
-
-tr
-  &:nth-child(even)
-    background: #F9F9F9
-
-td
-  padding: 10px 15px
-  box-sizing: border-box
-  text-align: left
-  font-size: 15px
-  line-height: 23px
-  color: #202020
-
-  &:first-child
-    max-width: 80px
-
-  &:last-child
-    border-right: none
-</style>
+<style scoped lang="sass"></style>

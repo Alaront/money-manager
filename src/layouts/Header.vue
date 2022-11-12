@@ -29,6 +29,13 @@
             >Новая запись</router-link
           >
         </li>
+        <li class="relative">
+          <router-link
+            class="block hover:bg-[#775da670] header-btn font-medium text-[16px] leading-[19px] py-[16px] pr-[12px] rounded-[12px] text-[#202020] pl-[48px] after:absolute after:bg-[url('../assets/header/statistics-icon.svg')] after:bg-contain after:w-[20px] after:h-[20px] after:top-[13px] after:left-[18px]"
+            to="/statistics"
+            >Статистика</router-link
+          >
+        </li>
       </ul>
     </nav>
   </header>
