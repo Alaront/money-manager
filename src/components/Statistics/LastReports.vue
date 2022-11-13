@@ -21,7 +21,7 @@
           <td :class="item.type ? 'income' : 'expenditure'" class="font-bold">
             {{ item.type ? "Доход" : "Расход" }}
           </td>
-          <td>{{ getCategoryName(item.id) }}</td>
+          <td>{{ getCategoryName(item.category) }}</td>
           <td>{{ item.sum }}</td>
           <td>{{ item.description }}</td>
         </tr>

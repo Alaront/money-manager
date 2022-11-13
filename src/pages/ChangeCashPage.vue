@@ -80,20 +80,6 @@
       <div class="mb-[25px]">
         <span
           class="block text-[18px] leading-[22px] text-[#898989] font-bold mb-[15px]"
-          >Дата</span
-        >
-        <label :class="{ 'error-data': dateError }">
-          <input
-            type="date"
-            v-model="date"
-            class="text-[20px] leading-[25px] text-[#202020] outline-none border-b-[2px] border-solid border-b-[#202020] py-[5px] px-[10px]"
-          />
-        </label>
-      </div>
-
-      <div class="mb-[25px]">
-        <span
-          class="block text-[18px] leading-[22px] text-[#898989] font-bold mb-[15px]"
           >Описание</span
         >
         <textarea
@@ -127,13 +113,11 @@ export default {
       sum: 0,
       description: "",
       name: "",
-      date: null,
 
       nameError: false,
       typeError: false,
       categoryError: false,
       sumError: false,
-      dateError: false,
     };
   },
   watch: {
@@ -157,13 +141,7 @@ export default {
 
       this.validation();
 
-      if (
-        this.nameError ||
-        this.typeError ||
-        this.categoryError ||
-        this.dateError
-      )
-        return;
+      if (this.nameError || this.typeError || this.categoryError) return;
 
       this.addNewReport({
         name: this.name.replace(/\s+/, ""),
@@ -171,7 +149,13 @@ export default {
         category: this.category,
         sum: this.sum,
         description: this.description,
-        date: this.date,
+        date: new Date().toISOString().split("T")[0],
+      });
+
+      this.changeCashOther({
+        flag: this.type,
+        sum: this.sum,
+        date: new Date().toISOString().split("T")[0],
       });
 
       this.resetData();
@@ -205,6 +189,7 @@ export default {
     },
 
     ...mapMutations("reports", ["addNewReport"]),
+    ...mapMutations("cash", ["changeCashOther"]),
   },
   computed: {
     ...mapGetters("category", ["getAllCategory"]),
