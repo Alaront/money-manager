@@ -1,7 +1,7 @@
 <template>
   <div class="bg-[#FFFFFF] p-[32px] rounded-[12px] box-content">
     <h2 class="text-[20px] leading-[26px] font-medium text-[#202020] mb-[20px]">
-      Последние записи
+      Последние записи (по дате)
     </h2>
     <div>
       <table class="w-[100%] table-info">
@@ -14,7 +14,7 @@
           <th>Сумма</th>
           <th>Описание</th>
         </tr>
-        <tr v-for="(item, iter) in getAllReports" v-bind:key="item.id">
+        <tr v-for="(item, iter) in getAllReportsReverse" v-bind:key="item.id">
           <td>{{ iter + 1 }}</td>
           <td>{{ item.name }}</td>
           <td>{{ item.date }}</td>
@@ -50,7 +50,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters("reports", ["getAllReports"]),
+    ...mapGetters("reports", ["getAllReportsReverse"]),
     ...mapGetters("category", ["getAllCategory"]),
   },
 };
