@@ -4,7 +4,7 @@
     subtitle="Новая запись в историю расходов и доходов"
   />
   <div
-    class="w-[50%] bg-[#FFFFFF] p-[32px] rounded-[12px] my-0 mx-auto box-content"
+    class="xl:w-[50%] bg-[#FFFFFF] p-[32px] rounded-[12px] my-0 mx-auto box-content"
   >
     <h3 class="text-[20px] leading-[25px] mb-[20px] font-medium">
       Внести новую запись по учёту средств
@@ -20,7 +20,7 @@
           <input
             type="text"
             v-model="name"
-            class="text-[20px] leading-[25px] text-[#202020] outline-none border-b-[2px] border-solid border-b-[#202020] py-[5px] px-[10px]"
+            class="w-[99%] xl:w-auto text-[20px] leading-[25px] text-[#202020] outline-none border-b-[2px] border-solid border-b-[#202020] py-[5px] px-[10px]"
           />
         </label>
       </div>
@@ -72,7 +72,7 @@
           <input
             type="text"
             v-model="sum"
-            class="text-[20px] leading-[25px] text-[#202020] outline-none border-b-[2px] border-solid border-b-[#202020] py-[5px] px-[10px]"
+            class="w-[99%] xl:w-auto text-[20px] leading-[25px] text-[#202020] outline-none border-b-[2px] border-solid border-b-[#202020] py-[5px] px-[10px]"
           />
         </label>
       </div>

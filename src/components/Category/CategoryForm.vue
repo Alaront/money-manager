@@ -1,5 +1,7 @@
 <template>
-  <div class="w-[30%] bg-[#FFFFFF] p-[32px] rounded-[12px] box-content">
+  <div
+    class="xl:w-[30%] bg-[#FFFFFF] p-[32px] rounded-[12px] box-content mb-[20px] xl:mb-0"
+  >
     <form v-on:submit.stop.prevent="makeNewCategory">
       <p class="font-[20px] leading-[25px] font-medium mb-[30px]">
         Создание новой категории

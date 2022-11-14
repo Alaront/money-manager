@@ -1,7 +1,7 @@
 <template>
   <title-page title="Категории" subtitle="Работа с категориями" />
 
-  <div class="flex gap-[20px] items-start">
+  <div class="xl:flex gap-[20px] items-start">
     <category-form />
     <category-show />
   </div>

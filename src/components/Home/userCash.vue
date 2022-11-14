@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-[30%] bg-[#FFFFFF] p-[32px] rounded-[12px] box-content relative after:absolute after:bg-[url('../assets/home/balance-wallet.svg')] after:bg-cover after:w-[34px] after:h-[34px] after:top-[23px] after:right-[23px]"
+    class="w-[100%] mb-[20px] box-border xl:mb-0 xl:w-[30%] bg-[#FFFFFF] p-[32px] rounded-[12px] relative after:absolute after:bg-[url('../assets/home/balance-wallet.svg')] after:bg-cover after:w-[34px] after:h-[34px] after:top-[23px] after:right-[23px]"
   >
     <h2 class="text-[23px] leading-[26px] font-medium text-[#202020] mb-[20px]">
       Ваш кошелёк

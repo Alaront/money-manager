@@ -1,5 +1,5 @@
 <template>
-  <div class="flex gap-[20px] items-start">
+  <div class="block xl:flex gap-[20px] items-start">
     <user-cash />
 
     <exchange-rates />

@@ -3,17 +3,19 @@
     <header-components
       class="w-[310px] bg-[#FFFFFF] py-[23px] px-[12px] box-border border-r-[1px] border-r-[#ada9a9] border-r-solid mr-[23px] h-[100vh] top-[0] left-[-310px] z-2"
       :class="{
-        fixed: windowWidth <= 1200,
+        fixed: windowWidth <= 1280,
         'top-[0] left-[0px]': openMenu,
       }"
     />
-    <div class="content grow-[1] pt-[25px] pr-[23px] box-border">
+    <div
+      class="content grow-[1] xl:pt-[25px] xl:pr-[23px] box-border w-[95%] xl:w-auto"
+    >
       <router-view></router-view>
     </div>
     <button
-      class="fixed bottom-[10px] left-[50%] translate-x-[-50%] block bg-[#775da670] font-medium text-[16px] leading-[19px] py-[9px] px-[12px] rounded-[12px] text-[#202020]"
+      class="menu-btn fixed bottom-[10px] left-[50%] translate-x-[-50%] block bg-[#775da670] font-medium text-[16px] leading-[19px] py-[9px] px-[12px] rounded-[12px] text-[#202020]"
       v-on:click="() => (openMenu = !openMenu)"
-      :class="windowWidth <= 1200 ? 'block' : 'hidden'"
+      :class="windowWidth <= 1280 ? 'block' : 'hidden'"
     >
       {{ openMenu ? "CLOSE MENU" : "OPEN MENU" }}
     </button>
@@ -30,7 +32,7 @@ export default {
   },
   data() {
     return {
-      openMenu: true,
+      openMenu: false,
       windowWidth: window.innerWidth,
     };
   },
