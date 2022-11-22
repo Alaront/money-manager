@@ -18,10 +18,6 @@ export default {
       return state.allReports;
     },
 
-    getAllReportsReverse(state) {
-      return state.allReports.reverse();
-    },
-
     getLastId(state) {
       return state.lastId;
     },

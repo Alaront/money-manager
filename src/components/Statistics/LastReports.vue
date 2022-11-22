@@ -18,7 +18,7 @@
         </thead>
         <tbody>
           <tr
-            v-for="(item, iter) in getAllReportsReverse"
+            v-for="(item, iter) in getAllReportsRevert"
             v-bind:key="item.id"
             class="block xl:table-row"
           >
@@ -67,7 +67,11 @@ export default {
     },
   },
   computed: {
-    ...mapGetters("reports", ["getAllReportsReverse"]),
+    getAllReportsRevert() {
+      return this.getAllReports.slice().reverse();
+    },
+
+    ...mapGetters("reports", ["getAllReports"]),
     ...mapGetters("category", ["getAllCategory"]),
   },
 };

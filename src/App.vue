@@ -1,7 +1,7 @@
 <template>
   <div class="flex h-min-[100%] content">
     <header-components
-      class="w-[310px] bg-[#FFFFFF] py-[23px] px-[12px] box-border border-r-[1px] border-r-[#ada9a9] border-r-solid mr-[23px] h-[100vh] top-[0] left-[-310px] z-2"
+      class="w-[310px] bg-[#FFFFFF] py-[23px] px-[12px] box-border border-r-[1px] border-r-[#ada9a9] border-r-solid mr-[23px] h-[100vh] xl:h-auto top-[0] left-[-310px] z-2"
       :class="{
         fixed: windowWidth <= 1280,
         'top-[0] left-[0px]': openMenu,
