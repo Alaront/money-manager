@@ -42,17 +42,26 @@ export default {
   methods: {
     async getExchangeRates() {
       let data = await axios
-        .get("https://cdn.cur.su/api/cbr.json", {})
+        .get(
+          "https://v6.exchangerate-api.com/v6/f5abc80e7b49e13d843b7a90/latest/RUB",
+          {}
+        )
         .then((r) => r.data);
 
-      console.log(data);
-      this.exchange.USD = data.rates.RUB;
+      this.exchange.USD = data.conversion_rates.USD;
+      this.exchange.EUR = data.conversion_rates.EUR;
+      this.exchange.JPY = data.conversion_rates.JPY;
 
-      this.exchange.EUR = data.rates.EUR / data.rates.RUB;
-
-      this.exchange.JPY = data.rates.JPY / data.rates.RUB;
-
-      console.log(this.exchange.EUR);
+      // var requestURL = "https://api.exchangerate.host/latest";
+      // var request = new XMLHttpRequest();
+      // request.open("GET", requestURL);
+      // request.responseType = "json";
+      // request.send();
+      //
+      // request.onload = function () {
+      //   var response = request.response;
+      //   console.log(response);
+      // };
     },
   },
 
@@ -61,17 +70,17 @@ export default {
       return [
         {
           id: 1,
-          pair: "RUBUSD",
-          data: this.getValueCash / this.exchange.USD,
+          pair: "RUB-USD",
+          data: this.getValueCash * this.exchange.USD,
         },
         {
           id: 2,
-          pair: "EUR",
+          pair: "RUB-EUR",
           data: this.getValueCash * this.exchange.EUR,
         },
         {
           id: 3,
-          pair: "JPY",
+          pair: "RUB-JPY",
           data: this.getValueCash * this.exchange.JPY,
         },
       ];
