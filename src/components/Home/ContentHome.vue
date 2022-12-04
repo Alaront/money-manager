@@ -2,7 +2,7 @@
   <div class="block xl:flex gap-[20px] items-start">
     <user-cash />
 
-    <exchange-rates />
+    <exchange-rates @open-popup="$emit('open-popup')" />
   </div>
 </template>
 

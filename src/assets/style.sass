@@ -65,8 +65,38 @@ table.table-info
     &:last-child
       border-right: none
 
+      color: rgba(111, 111, 111, 0.66)
 
 h1, h2, h3, h4, h5, h6,
 a,
 p
   font-family: "Inter", sans-serif
+
+.exchange-ok
+  position: relative
+
+
+  &:before
+    content: ''
+    width: 30px
+    height: 30px
+    position: absolute
+    background: url("./home/icon-ok.png") 0 0 no-repeat
+    background-size: contain
+    top: -11px
+    left: -2px
+
+
+::-webkit-scrollbar
+  width: 7px
+  height: 8px
+  background-color: #775da6
+
+::-webkit-scrollbar-thumb
+  background-color: #c0c0c0
+  border-radius: 9em
+  box-shadow: inset 1px 1px 10px #f3faf7
+
+
+::-webkit-scrollbar-thumb:hover
+  background-color: #c0c0c0

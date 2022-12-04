@@ -1,5 +1,5 @@
 <template>
-  <tr v-for="item in exchangesData" v-bind:key="item.id">
+  <tr v-for="item in exchangesRatesData" v-bind:key="item.id">
     <td>{{ item.pair }}</td>
     <td>{{ getValueCash }}</td>
     <td>{{ item.data.toFixed(2) }}</td>
@@ -13,7 +13,9 @@ export default {
   name: "exchange-rates-items",
 
   data() {
-    return {};
+    return {
+      dataExchangeRates: [],
+    };
   },
 
   mounted() {
@@ -29,14 +31,7 @@ export default {
         )
         .then((r) => r.data);
 
-      console.log("data.conversion_rates", data.conversion_rates);
-
-      const allPairKeys = Object.keys(this.getPairExchange);
-      console.log("allPairKeys", allPairKeys);
-
-      allPairKeys.forEach(
-        (item) => (this.getPairExchange[item] = data.conversion_rates[item])
-      );
+      this.dataExchangeRates = data.conversion_rates;
 
       // var requestURL = "https://api.exchangerate.host/latest";
       // var request = new XMLHttpRequest();
@@ -49,17 +44,26 @@ export default {
       //   console.log(response);
       // };
     },
+
+    getExchangeByKey(key) {
+      return Object.keys(this.dataExchangeRates).length > 0
+        ? this.dataExchangeRates[key]
+        : 1;
+    },
   },
 
   computed: {
-    exchangesData() {
-      const allPairKeys = Object.keys(this.getPairExchange);
+    exchangesRatesData() {
+      const allPairKeys = this.getPairExchange;
 
-      return allPairKeys.map((item, index) => ({
-        id: index,
-        pair: `RUB-${item}`,
-        data: this.getValueCash * this.getPairExchange[item],
+      const newAllPai = allPairKeys.map((item) => ({
+        id: item.id,
+        pair: item.value,
+        status: item.status,
+        data: this.getValueCash * this.getExchangeByKey(item.key),
       }));
+
+      return newAllPai.filter((item) => item.status);
     },
 
     ...mapGetters("cash", ["getValueCash", "getPairExchange"]),
