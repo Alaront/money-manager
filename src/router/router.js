@@ -3,6 +3,7 @@ import HomePage from "@/pages/HomePage";
 import CategoryPage from "@/pages/CategoryPage";
 import ChangeCashPage from "@/pages/ChangeCashPage";
 import StatisticsPage from "@/pages/StatisticsPage";
+import LoginPage from "@/pages/LoginPage";
 
 export default createRouter({
   history: createWebHistory(),
@@ -11,6 +12,12 @@ export default createRouter({
       path: "/",
       component: HomePage,
       alias: "/",
+    },
+    {
+      path: "/login",
+      component: LoginPage,
+      alias: "/",
+      meta: { hideNavigation: true },
     },
     {
       path: "/category",
