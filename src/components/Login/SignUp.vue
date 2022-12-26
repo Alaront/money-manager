@@ -30,12 +30,7 @@
         v-model="passwordDataTwo"
       />
 
-      <button
-        type="submit"
-        class="bg-[#775da6] py-[10px] text-center text-[#ffffff] font-medium rounded-[12px] w-[100%] block"
-      >
-        Регистрация
-      </button>
+      <button type="submit" :class="this.formBtnStyle">Регистрация</button>
     </form>
   </form>
 </template>

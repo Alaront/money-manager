@@ -20,7 +20,7 @@
           <input
             type="text"
             v-model="name"
-            class="w-[99%] xl:w-auto text-[20px] leading-[25px] text-[#202020] outline-none border-b-[2px] border-solid border-b-[#202020] py-[5px] px-[10px]"
+            :class="this.inputBottomLineStyle"
           />
         </label>
       </div>
@@ -69,11 +69,7 @@
           >Сумма</span
         >
         <label :class="{ 'error-data': sumError }">
-          <input
-            type="text"
-            v-model="sum"
-            class="w-[99%] xl:w-auto text-[20px] leading-[25px] text-[#202020] outline-none border-b-[2px] border-solid border-b-[#202020] py-[5px] px-[10px]"
-          />
+          <input type="text" v-model="sum" :class="this.inputBottomLineStyle" />
         </label>
       </div>
 
@@ -88,11 +84,7 @@
         />
       </div>
 
-      <button
-        class="bg-[#775da6] py-[10px] text-center text-[#ffffff] font-medium rounded-[12px] w-[100%] block"
-      >
-        Создать
-      </button>
+      <button :class="this.formBtnStyle">Создать</button>
     </form>
   </div>
 </template>

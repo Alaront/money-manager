@@ -9,16 +9,13 @@
       <label class="flex flex-col text-[#898989] text-[14px] mb-[50px]">
         Название
         <input
-          class="border-b-[2px] border-b-[#202020] border-solid text-[20px] py-[5px] px-[10px] text-[#202020] outline-none mt-[5px]"
+          class="mt-[5px]"
+          :class="this.inputBottomLineStyle"
           type="text"
           v-model="categoriesName"
         />
       </label>
-      <button
-        class="bg-[#775da6] py-[10px] text-center text-[#ffffff] font-medium rounded-[12px] w-[100%] block"
-      >
-        Добавить
-      </button>
+      <button :class="this.formBtnStyle">Добавить</button>
     </form>
   </div>
 </template>
