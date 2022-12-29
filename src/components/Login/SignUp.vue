@@ -106,7 +106,7 @@ export default {
     },
 
     signUpLogic() {
-      if (this.validation()) {
+      if (this.validation() && !this.formBlocked) {
         this.formBlocked = true;
         createUserWithEmailAndPassword(auth, this.emailData, this.passwordData)
           .then((userCredential) => {
