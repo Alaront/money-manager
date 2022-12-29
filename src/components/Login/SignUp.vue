@@ -5,38 +5,67 @@
         type="name"
         placeholder="Введите имя"
         :class="getInputStyle"
-        class="mb-[20px]"
+        class="mb-[25px]"
         v-model="nameData"
       />
-      <input
-        type="email"
-        placeholder="Введите Email"
-        :class="getInputStyle"
-        class="mb-[20px]"
-        v-model="emailData"
-      />
-      <input
-        type="text"
-        placeholder="Введите Пароль"
-        :class="getInputStyle"
-        class="mb-[20px]"
-        v-model="passwordData"
-      />
-      <input
-        type="text"
-        placeholder="Повторите Пароль"
-        :class="getInputStyle"
-        class="mb-[20px]"
-        v-model="passwordDataTwo"
-      />
 
-      <button type="submit" :class="this.formBtnStyle">Регистрация</button>
+      <label class="relative mb-[5px]">
+        <input
+          type="email"
+          placeholder="Введите Email"
+          :class="getInputStyle"
+          class="mb-[20px]"
+          v-model="emailData"
+        />
+        <span
+          class="text-[12px] text-[#FF5555] absolute bottom-0 left-0"
+          v-if="emailErrorData"
+          >Email не подходит или уже используется, пример test@mail.com
+        </span>
+      </label>
+
+      <label class="relative mb-[5px]">
+        <input
+          type="text"
+          placeholder="Введите Пароль"
+          :class="getInputStyle"
+          class="mb-[20px]"
+          v-model="passwordData"
+        />
+        <span
+          class="text-[12px] text-[#FF5555] absolute bottom-0 left-0"
+          v-if="passwordErrorData"
+          >Пароль не подходит, пример qwertyW1@
+        </span>
+      </label>
+
+      <label class="relative mb-[15px]">
+        <input
+          type="text"
+          placeholder="Повторите Пароль"
+          :class="getInputStyle"
+          class="mb-[20px]"
+          v-model="passwordDataTwo"
+        />
+        <span
+          class="text-[12px] text-[#FF5555] absolute bottom-0 left-0"
+          v-if="!passwordErrorDataTwo"
+          >Пароли не совпадают
+        </span>
+      </label>
+
+      <button type="submit" :class="this.formBtnStyle" :disabled="formBlocked">
+        Регистрация
+      </button>
     </form>
   </form>
 </template>
 
 <script>
 import { localStorageRead, localStorageWrite } from "@/helpers";
+import { auth } from "@/firebase";
+import validator from "validator";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 export default {
   name: "LoginUpBlock",
@@ -47,6 +76,12 @@ export default {
       emailData: "",
       passwordData: "",
       passwordDataTwo: "",
+
+      emailErrorData: false,
+      passwordErrorData: false,
+      passwordErrorDataTwo: true,
+
+      formBlocked: false,
     };
   },
 
@@ -54,6 +89,43 @@ export default {
     const data = localStorageRead("moneyManagerSignUpForm");
     this.nameData = data.name;
     this.emailData = data.email;
+  },
+
+  methods: {
+    validation() {
+      console.log(this.passwordData);
+      this.emailErrorData = !validator.isEmail(this.emailData);
+      this.passwordErrorData = !validator.isStrongPassword(this.passwordData);
+      this.passwordErrorDataTwo = this.passwordData === this.passwordDataTwo;
+
+      return (
+        !this.emailErrorData &&
+        !this.passwordErrorData &&
+        this.passwordErrorDataTwo
+      );
+    },
+
+    signUpLogic() {
+      if (this.validation()) {
+        this.formBlocked = true;
+        createUserWithEmailAndPassword(auth, this.emailData, this.passwordData)
+          .then((userCredential) => {
+            const user = userCredential.user;
+            console.log("auth good answer", user);
+            this.$router.push("/");
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log("made error", errorMessage, "###", errorCode);
+            if (errorCode === "auth/email-already-in-use")
+              this.emailErrorData = true;
+          })
+          .finally(() => {
+            this.formBlocked = false;
+          });
+      }
+    },
   },
 
   unmounted() {
