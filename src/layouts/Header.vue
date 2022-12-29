@@ -36,6 +36,14 @@
             >Статистика</router-link
           >
         </li>
+        <li class="relative">
+          <span
+            @click="escape"
+            class="block cursor-pointer hover:bg-[#775da670] header-btn font-medium text-[16px] leading-[19px] py-[16px] pr-[12px] rounded-[12px] text-[#202020] pl-[48px] after:absolute after:bg-[url('../assets/header/home-exit.png')] after:bg-contain after:w-[20px] after:h-[20px] after:top-[13px] after:left-[18px]"
+            to="/statistics"
+            >Выход</span
+          >
+        </li>
       </ul>
     </nav>
   </header>
@@ -43,11 +51,25 @@
 
 <script>
 import LogoSvg from "@/components/LogoSvg";
+import { auth } from "@/firebase";
+import { signOut } from "firebase/auth";
 
 export default {
   name: "HeaderComponent",
   components: {
     "logo-svg": LogoSvg,
+  },
+
+  methods: {
+    escape() {
+      signOut(auth)
+        .then(() => {
+          this.$router.push("/login");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
 };
 </script>

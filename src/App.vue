@@ -30,6 +30,8 @@
 
 <script>
 import Header from "@/layouts/Header";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "@/firebase";
 
 export default {
   name: "App",
@@ -49,6 +51,15 @@ export default {
     updateWidth() {
       this.windowWidth = window.innerWidth;
     },
+  },
+
+  mounted() {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const uid = user.uid;
+        console.log("user is login ", uid);
+      }
+    });
   },
 };
 </script>
