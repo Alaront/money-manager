@@ -63,9 +63,10 @@
 
 <script>
 import { localStorageRead, localStorageWrite } from "@/helpers";
-import { auth } from "@/firebase";
+import { auth, db } from "@/firebase";
 import validator from "validator";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
 
 export default {
   name: "LoginUpBlock",
@@ -109,9 +110,16 @@ export default {
       if (this.validation() && !this.formBlocked) {
         this.formBlocked = true;
         createUserWithEmailAndPassword(auth, this.emailData, this.passwordData)
-          .then((userCredential) => {
-            const user = userCredential.user;
-            console.log("auth good answer", user);
+          .then((userCredential) => userCredential.user.uid)
+          .then((userId) => {
+            console.log("userId", userId);
+            setDoc(doc(db, "category", userId), {
+              0: "Учёба",
+              1: "Медицина",
+              2: "Еда",
+            });
+          })
+          .then(() => {
             this.$router.push("/");
           })
           .catch((error) => {

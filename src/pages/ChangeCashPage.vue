@@ -53,11 +53,11 @@
             class="text-[20px] leading-[25px] text-[#202020] px-[6px] py-[4px] pr-[8px]"
           >
             <option
-              v-for="item in getAllCategory"
-              v-bind:key="item.id"
-              :value="item.id"
+              v-for="[id, name] of Object.entries(allCategory)"
+              v-bind:key="id"
+              :value="id"
             >
-              {{ item.name }}
+              {{ name }}
             </option>
           </select>
         </label>
@@ -92,6 +92,8 @@
 <script>
 import titlePage from "@/components/TitlePage";
 import { mapGetters, mapMutations } from "vuex";
+import { auth, db } from "@/firebase";
+import { doc, getDoc } from "firebase/firestore";
 
 export default {
   name: "ChangeCashPage",
@@ -110,6 +112,8 @@ export default {
       typeError: false,
       categoryError: false,
       sumError: false,
+
+      allCategory: {},
     };
   },
   watch: {
@@ -184,8 +188,18 @@ export default {
     ...mapMutations("cash", ["changeCashOther"]),
   },
   computed: {
-    ...mapGetters("category", ["getAllCategory"]),
     ...mapGetters("reports", ["getAllReports"]),
+  },
+  mounted() {
+    const user = auth.currentUser;
+
+    getDoc(doc(db, "category", user.uid)).then((data) => {
+      if (data.exists()) {
+        this.allCategory = data.data();
+      } else {
+        console.log("No such document!");
+      }
+    });
   },
 };
 </script>

@@ -21,7 +21,9 @@
 </template>
 
 <script>
-import { mapMutations, mapGetters } from "vuex";
+import { doc, setDoc } from "firebase/firestore";
+import { auth, db } from "@/firebase";
+import { uid } from "uid";
 
 export default {
   name: "CategoryForm",
@@ -32,21 +34,20 @@ export default {
   },
   methods: {
     makeNewCategory() {
-      this.addNewCategory({
-        id: this.getLastId + 1,
-        name: this.categoriesName,
-      });
+      const user = auth.currentUser;
 
-      this.changeLastId();
+      if (user.uid) {
+        setDoc(
+          doc(db, "category", user.uid),
+          { [uid(16)]: this.categoriesName },
+          { merge: true }
+        );
 
-      this.categoriesName = "";
+        this.categoriesName = "";
+      } else {
+        this.$router.push("/login");
+      }
     },
-
-    ...mapMutations("category", ["addNewCategory", "changeLastId"]),
-  },
-
-  computed: {
-    ...mapGetters("category", ["getLastId"]),
   },
 };
 </script>

@@ -49,21 +49,19 @@
 
 <script>
 import { mapGetters } from "vuex";
+import { auth, db } from "@/firebase";
+import { doc, getDoc } from "firebase/firestore";
 
 export default {
   name: "last-reports",
+  data() {
+    return {
+      allCategory: {},
+    };
+  },
   methods: {
     getCategoryName(id) {
-      let name = "";
-
-      this.getAllCategory.forEach((item) => {
-        if (item.id === id) {
-          name = item.name;
-          return;
-        }
-      });
-
-      return name;
+      return this.allCategory[id];
     },
   },
   computed: {
@@ -72,7 +70,18 @@ export default {
     },
 
     ...mapGetters("reports", ["getAllReports"]),
-    ...mapGetters("category", ["getAllCategory"]),
+  },
+
+  mounted() {
+    const user = auth.currentUser;
+
+    getDoc(doc(db, "category", user.uid)).then((data) => {
+      if (data.exists()) {
+        this.allCategory = data.data();
+      } else {
+        console.log("No such document!");
+      }
+    });
   },
 };
 </script>

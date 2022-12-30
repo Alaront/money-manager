@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: process.env.VUE_APP_API_KEY_VARIABLE,
@@ -13,5 +14,6 @@ const firebaseConfig = {
 /*eslint-disable */
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
+const db = getFirestore(app);
 
-export { auth };
+export { auth, db };
