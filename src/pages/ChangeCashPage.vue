@@ -91,9 +91,10 @@
 
 <script>
 import titlePage from "@/components/TitlePage";
-import { mapGetters, mapMutations } from "vuex";
+import { mapMutations } from "vuex";
 import { auth, db } from "@/firebase";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import { uid } from "uid";
 
 export default {
   name: "ChangeCashPage",
@@ -139,14 +140,27 @@ export default {
 
       if (this.nameError || this.typeError || this.categoryError) return;
 
-      this.addNewReport({
-        name: this.name.replace(/\s+/, ""),
-        type: this.type,
-        category: this.category,
-        sum: this.sum,
-        description: this.description,
-        date: new Date().toISOString().split("T")[0],
-      });
+      const user = auth.currentUser;
+
+      if (user.uid) {
+        setDoc(
+          doc(db, "reports", user.uid),
+          {
+            [uid(16)]: {
+              name: this.name.replace(/\s+/, ""),
+              type: this.type,
+              category: this.category,
+              sum: this.sum,
+              description: this.description,
+              date: new Date().toISOString().split("T")[0],
+              dateOrder: Date.now(),
+            },
+          },
+          { merge: true }
+        );
+      } else {
+        this.$router.push("/login");
+      }
 
       this.changeCashOther({
         flag: this.type,
@@ -155,8 +169,6 @@ export default {
       });
 
       this.resetData();
-
-      console.log(this.getAllReports);
     },
 
     resetError() {
@@ -184,11 +196,7 @@ export default {
       this.name = "";
     },
 
-    ...mapMutations("reports", ["addNewReport"]),
     ...mapMutations("cash", ["changeCashOther"]),
-  },
-  computed: {
-    ...mapGetters("reports", ["getAllReports"]),
   },
   mounted() {
     const user = auth.currentUser;

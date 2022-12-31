@@ -118,6 +118,12 @@ export default {
               1: "Медицина",
               2: "Еда",
             });
+
+            return userId;
+          })
+          .then((userId) => {
+            console.log("userId", userId);
+            setDoc(doc(db, "reports", userId), {});
           })
           .then(() => {
             this.$router.push("/");

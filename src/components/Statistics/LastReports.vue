@@ -18,8 +18,8 @@
         </thead>
         <tbody>
           <tr
-            v-for="(item, iter) in getAllReportsRevert"
-            v-bind:key="item.id"
+            v-for="([id, item], iter) of Object.entries(allReports)"
+            v-bind:key="id"
             class="block xl:table-row"
           >
             <td class="block xl:table-cell relative">{{ iter + 1 }}</td>
@@ -48,7 +48,6 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 import { auth, db } from "@/firebase";
 import { doc, getDoc } from "firebase/firestore";
 
@@ -57,31 +56,55 @@ export default {
   data() {
     return {
       allCategory: {},
+      allReports: {},
     };
   },
   methods: {
     getCategoryName(id) {
       return this.allCategory[id];
     },
-  },
-  computed: {
-    getAllReportsRevert() {
-      return this.getAllReports.slice().reverse();
+
+    getAllReports() {
+      const user = auth.currentUser;
+
+      getDoc(doc(db, "reports", user.uid)).then((data) => {
+        if (data.exists()) {
+          const reports = Object.values(data.data());
+
+          reports.sort(function (a, b) {
+            if (a.dateOrder < b.dateOrder) {
+              return 1;
+            }
+            if (a.dateOrder > b.dateOrder) {
+              return -1;
+            }
+
+            return 0;
+          });
+
+          this.allReports = reports;
+        } else {
+          console.log("No such document!");
+        }
+      });
     },
 
-    ...mapGetters("reports", ["getAllReports"]),
+    getAllCategory() {
+      const user = auth.currentUser;
+
+      getDoc(doc(db, "category", user.uid)).then((data) => {
+        if (data.exists()) {
+          this.allCategory = data.data();
+        } else {
+          console.log("No such document!");
+        }
+      });
+    },
   },
 
   mounted() {
-    const user = auth.currentUser;
-
-    getDoc(doc(db, "category", user.uid)).then((data) => {
-      if (data.exists()) {
-        this.allCategory = data.data();
-      } else {
-        console.log("No such document!");
-      }
-    });
+    this.getAllCategory();
+    this.getAllReports();
   },
 };
 </script>
