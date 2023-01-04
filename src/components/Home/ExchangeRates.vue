@@ -22,9 +22,21 @@
 
 <script>
 import ExchangeRatesItems from "@/components/Home/ExchangeRatesItems";
+import { mapMutations } from "vuex";
+import { localStorageRead } from "@/helpers";
 
 export default {
   name: "exchange-rates",
+
+  mounted() {
+    const activePair = localStorageRead("activePairData");
+
+    this.updatePairExchange(activePair.data);
+  },
+
+  methods: {
+    ...mapMutations("cash", ["updatePairExchange"]),
+  },
 
   components: {
     "exchange-rates-items": ExchangeRatesItems,

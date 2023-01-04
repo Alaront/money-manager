@@ -1,3 +1,20 @@
+import { localStorageWrite } from "@/helpers";
+
+function setActivePairInLS(state) {
+  console.log("setActivePair");
+  const newData = [];
+
+  state.pairExchange.forEach((item) => {
+    if (item.status) {
+      newData.push(item.id);
+    }
+  });
+
+  localStorageWrite("activePairData", {
+    data: newData,
+  });
+}
+
 export default {
   namespaced: true,
   state() {
@@ -104,6 +121,24 @@ export default {
           };
         } else {
           return item;
+        }
+      });
+
+      setActivePairInLS(state);
+    },
+
+    updatePairExchange(state, activePair) {
+      state.pairExchange = state.pairExchange.map((item) => {
+        if (activePair.includes(item.id)) {
+          return {
+            ...item,
+            status: true,
+          };
+        } else {
+          return {
+            ...item,
+            status: false,
+          };
         }
       });
     },
