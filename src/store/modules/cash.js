@@ -95,21 +95,6 @@ export default {
   },
 
   mutations: {
-    changeCashStore(state, data) {
-      state.valueCash = data;
-    },
-
-    changeCashOther(state, data) {
-      if (data.flag) {
-        state.valueCash = state.valueCash + data.sum;
-      } else {
-        state.valueCash = state.valueCash - data.sum;
-      }
-
-      state.historyChangeCash = [...state.historyChangeCash, state.valueCash];
-      state.historyChangeCashDate = [...state.historyChangeCashDate, data.date];
-    },
-
     changePairStatus(state, id) {
       state.pairExchange = state.pairExchange.map((item) => {
         if (item.id === id) {
@@ -125,18 +110,6 @@ export default {
   },
 
   getters: {
-    getValueCash(state) {
-      return state.valueCash;
-    },
-
-    getHistoryChangeCash(state) {
-      return state.historyChangeCash;
-    },
-
-    getHistoryChangeCashDate(state) {
-      return state.historyChangeCashDate;
-    },
-
     getPairExchange(state) {
       return state.pairExchange;
     },

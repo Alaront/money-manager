@@ -40,21 +40,55 @@ ChartJS.register(
   LineElement
 );
 
-import { mapGetters } from "vuex";
+import { auth, db } from "@/firebase";
+import { doc } from "firebase/firestore";
+import { getDataByRef } from "@/firebase/helpers";
 
 export default {
   name: "history-cash",
+
   components: {
     Line: Line,
   },
+
+  data() {
+    return {
+      historyChangeCash: [],
+      historyChangeCashDate: [],
+    };
+  },
+
+  mounted() {
+    this.getHistoryChangeCash();
+    this.getHistoryChangeCashDate();
+  },
+
+  methods: {
+    async getHistoryChangeCash() {
+      const user = auth.currentUser;
+      const cashRef = doc(db, "cash", user.uid);
+
+      const data = await getDataByRef(cashRef);
+      this.historyChangeCash = data.historyChangeCash;
+    },
+
+    async getHistoryChangeCashDate() {
+      const user = auth.currentUser;
+      const cashRef = doc(db, "cash", user.uid);
+
+      const data = await getDataByRef(cashRef);
+      this.historyChangeCashDate = data.historyChangeCashDate;
+    },
+  },
+
   computed: {
     chartData() {
       return {
-        labels: this.getHistoryChangeCashDate,
+        labels: this.historyChangeCashDate,
         datasets: [
           {
             label: "График",
-            data: this.getHistoryChangeCash,
+            data: this.historyChangeCash,
             borderColor: "rgb(75, 192, 192)",
             tension: 0.1,
           },
@@ -66,7 +100,6 @@ export default {
         responsive: true,
       };
     },
-    ...mapGetters("cash", ["getHistoryChangeCash", "getHistoryChangeCashDate"]),
   },
 };
 </script>

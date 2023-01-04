@@ -91,9 +91,8 @@
 
 <script>
 import titlePage from "@/components/TitlePage";
-import { mapMutations } from "vuex";
 import { auth, db } from "@/firebase";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { uid } from "uid";
 
 export default {
@@ -133,7 +132,7 @@ export default {
     },
   },
   methods: {
-    newEntry() {
+    async newEntry() {
       this.resetError();
 
       this.validation();
@@ -162,13 +161,49 @@ export default {
         this.$router.push("/login");
       }
 
-      this.changeCashOther({
-        flag: this.type,
-        sum: this.sum,
-        date: new Date().toISOString().split("T")[0],
-      });
+      await this.changeCashOther();
 
       this.resetData();
+    },
+
+    async changeCashOther() {
+      const user = auth.currentUser;
+      const cashRef = doc(db, "cash", user.uid);
+      const dataCash = await getDoc(cashRef);
+
+      if (dataCash.exists()) {
+        console.log("Document data:", dataCash.data());
+      } else {
+        console.log("No such document!");
+
+        return;
+      }
+
+      const newValueCash = this.type
+        ? this.sum + dataCash.data().valueCash
+        : dataCash.data().valueCash - this.sum;
+
+      try {
+        await updateDoc(cashRef, {
+          valueCash: newValueCash,
+        });
+
+        await updateDoc(cashRef, {
+          historyChangeCashDate: [
+            ...dataCash.data().historyChangeCashDate,
+            new Date().toISOString().split("T")[0],
+          ],
+        });
+
+        await updateDoc(cashRef, {
+          historyChangeCash: [
+            ...dataCash.data().historyChangeCash,
+            newValueCash,
+          ],
+        });
+      } catch (e) {
+        console.error("Error", e);
+      }
     },
 
     resetError() {
@@ -188,6 +223,7 @@ export default {
     },
 
     resetData() {
+      console.log("reset start");
       this.type = null;
       this.category = null;
       this.date = null;
@@ -195,8 +231,6 @@ export default {
       this.description = "";
       this.name = "";
     },
-
-    ...mapMutations("cash", ["changeCashOther"]),
   },
   mounted() {
     const user = auth.currentUser;

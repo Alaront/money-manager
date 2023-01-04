@@ -122,6 +122,16 @@ export default {
             return userId;
           })
           .then((userId) => {
+            console.log("cash", userId);
+            setDoc(doc(db, "cash", userId), {
+              valueCash: 30000,
+              historyChangeCash: [30000],
+              historyChangeCashDate: [new Date().toISOString().split("T")[0]],
+            });
+
+            return userId;
+          })
+          .then((userId) => {
             console.log("userId", userId);
             setDoc(doc(db, "reports", userId), {});
           })

@@ -1,13 +1,15 @@
 <template>
   <tr v-for="item in exchangesRatesData" v-bind:key="item.id">
     <td>{{ item.pair }}</td>
-    <td>{{ getValueCash }}</td>
+    <td>{{ valueCashOwner }}</td>
     <td>{{ item.data.toFixed(2) }}</td>
   </tr>
 </template>
 <script>
 import { mapGetters } from "vuex";
 import axios from "axios";
+import { auth, db } from "@/firebase";
+import { doc, onSnapshot } from "firebase/firestore";
 
 export default {
   name: "exchange-rates-items",
@@ -15,14 +17,25 @@ export default {
   data() {
     return {
       dataExchangeRates: [],
+      valueCashOwner: 0,
     };
   },
 
   mounted() {
     this.getExchangeRates();
+    this.getValueCashData();
   },
 
   methods: {
+    getValueCashData() {
+      const user = auth.currentUser;
+      const cashRef = doc(db, "cash", user.uid);
+
+      onSnapshot(cashRef, (doc) => {
+        this.valueCashOwner = doc.data().valueCash || 0;
+      });
+    },
+
     async getExchangeRates() {
       let data = await axios
         .get(
@@ -60,13 +73,13 @@ export default {
         id: item.id,
         pair: item.value,
         status: item.status,
-        data: this.getValueCash * this.getExchangeByKey(item.key),
+        data: this.valueCashOwner * this.getExchangeByKey(item.key),
       }));
 
       return newAllPai.filter((item) => item.status);
     },
 
-    ...mapGetters("cash", ["getValueCash", "getPairExchange"]),
+    ...mapGetters("cash", ["getPairExchange"]),
   },
 };
 </script>

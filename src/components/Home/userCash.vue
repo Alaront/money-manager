@@ -19,7 +19,9 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { doc, updateDoc } from "firebase/firestore";
+import { auth, db } from "@/firebase";
+import { getDataByRef } from "@/firebase/helpers";
 
 export default {
   name: "user-cash",
@@ -31,11 +33,26 @@ export default {
   },
 
   mounted() {
-    this.valueCash = this.getValueCash;
+    this.getValueCashData();
   },
 
   methods: {
-    ...mapMutations("cash", ["changeCashStore"]),
+    changeCashStore(number) {
+      const user = auth.currentUser;
+
+      const cashRef = doc(db, "cash", user.uid);
+      updateDoc(cashRef, {
+        valueCash: number,
+      });
+    },
+
+    async getValueCashData() {
+      const user = auth.currentUser;
+      const cashRef = doc(db, "cash", user.uid);
+
+      const data = await getDataByRef(cashRef);
+      this.valueCash = data.valueCash;
+    },
   },
 
   watch: {
@@ -49,12 +66,7 @@ export default {
 
       this.valueCash = Number(str);
       this.changeCashStore(Number(str));
-      console.log("this.valueCash", this.getValueCash);
     },
-  },
-
-  computed: {
-    ...mapGetters("cash", ["getValueCash"]),
   },
 };
 </script>
