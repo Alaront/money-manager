@@ -1,5 +1,7 @@
 <template>
-  <div class="bg-[#FFFFFF] w-[90%] p-[32px] xl:w-[40%] rounded-[12px] mx-auto">
+  <div
+    class="bg-[#FFFFFF] w-[90%] p-[32px] xl:w-[40%] rounded-[12px] mx-auto special-block-page"
+  >
     <h1
       class="text-[23px] leading-[26px] font-medium text-[#202020] mb-[20px] text-center"
     >

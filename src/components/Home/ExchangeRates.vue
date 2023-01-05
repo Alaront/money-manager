@@ -35,7 +35,7 @@ export default {
   },
 
   methods: {
-    ...mapMutations("cash", ["updatePairExchange"]),
+    ...mapMutations("setting", ["updatePairExchange"]),
   },
 
   components: {

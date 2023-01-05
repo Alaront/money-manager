@@ -44,6 +44,13 @@
             >Выход</span
           >
         </li>
+        <li class="relative mr-[10px]">
+          <span
+            class="w-[50px] h-[50px] block bg-[url('../assets/header/sun.svg')] bg-contain cursor-pointer icon-theme"
+            @click="changeTheme"
+          >
+          </span>
+        </li>
       </ul>
     </nav>
   </header>
@@ -61,6 +68,10 @@ export default {
   },
 
   methods: {
+    changeTheme() {
+      this.$emit("change-theme");
+    },
+
     escape() {
       signOut(auth)
         .then(() => {

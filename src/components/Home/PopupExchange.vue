@@ -3,7 +3,7 @@
     class="fixed top-0 left-0 w-[100%] h-[100%] z-[3] flex items-center justify-center bg-[#242323bf]"
   >
     <div
-      class="max-w-[700px] w-[50%] h-[80%] max-h-[500px] bg-[#dddddd] rounded-[20px] py-[30px] px-[20px] relative"
+      class="max-w-[700px] w-[50%] h-[80%] max-h-[500px] bg-[#dddddd] rounded-[20px] py-[30px] px-[20px] relative popup-exchange"
     >
       <h4
         class="text-center uppercase text-[19px] leading-[26px] font-medium text-[#202020] mb-[40px]"
@@ -47,11 +47,11 @@ export default {
       this.$emit("close-popup");
     },
 
-    ...mapMutations("cash", ["changePairStatus"]),
+    ...mapMutations("setting", ["changePairStatus"]),
   },
 
   computed: {
-    ...mapGetters("cash", ["getPairExchange"]),
+    ...mapGetters("setting", ["getPairExchange"]),
   },
 };
 </script>

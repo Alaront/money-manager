@@ -19,9 +19,6 @@ export default {
   namespaced: true,
   state() {
     return {
-      valueCash: 30000,
-      historyChangeCash: [30000],
-      historyChangeCashDate: ["2022-11-09"],
       pairExchange: [
         {
           id: 1,

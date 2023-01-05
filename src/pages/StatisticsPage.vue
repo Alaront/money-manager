@@ -1,6 +1,6 @@
 <template>
   <title-page title="Статистика" subtitle="Статистика трат и доходов" />
-  <div class="">
+  <div class="content-page">
     <history-cash />
     <last-reports />
   </div>

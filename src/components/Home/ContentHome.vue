@@ -1,5 +1,5 @@
 <template>
-  <div class="block xl:flex gap-[20px] items-start">
+  <div class="block xl:flex gap-[20px] items-start content-page">
     <user-cash />
 
     <exchange-rates @open-popup="$emit('open-popup')" />

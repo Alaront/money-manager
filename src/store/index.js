@@ -1,8 +1,8 @@
 import { createStore } from "vuex";
-import CashModule from "./modules/cash";
+import Setting from "./modules/setting";
 
 export default createStore({
   modules: {
-    cash: CashModule,
+    setting: Setting,
   },
 });

@@ -4,7 +4,7 @@
     subtitle="Новая запись в историю расходов и доходов"
   />
   <div
-    class="xl:w-[50%] bg-[#FFFFFF] p-[32px] rounded-[12px] my-0 mx-auto box-content"
+    class="xl:w-[50%] bg-[#FFFFFF] p-[32px] rounded-[12px] my-0 mx-auto box-content special-block-page"
   >
     <h3 class="text-[20px] leading-[25px] mb-[20px] font-medium">
       Внести новую запись по учёту средств

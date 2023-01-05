@@ -79,7 +79,7 @@ export default {
       return newAllPai.filter((item) => item.status);
     },
 
-    ...mapGetters("cash", ["getPairExchange"]),
+    ...mapGetters("setting", ["getPairExchange"]),
   },
 };
 </script>
